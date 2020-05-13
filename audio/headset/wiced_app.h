@@ -31,66 +31,23 @@
  * so agrees to indemnify Cypress against all liability.
  */
 
-#include <stdlib.h>
-#include <string.h>
+#ifndef _WICED_APP_H_
+#define _WICED_APP_H_
 
-/*
- * This utility copies a character string to another
- */
-char *utl_strcpy( char *p_dst, char *p_src )
-{
-    register char *pd = p_dst;
-    register char *ps = p_src;
+#include "wiced_bt_trace.h"
+#include "wiced_hci.h"
 
-    while ( *ps )
-        *pd++ = *ps++;
+#define WICED_PIN_CODE_LEN                  4
+extern const uint8_t pincode[WICED_PIN_CODE_LEN];
 
-    *pd++ = 0;
-    return ( p_dst );
-}
+/* BR/EDR Profiles/Applications */
+#define WICED_APP_AUDIO_SRC_INCLUDED        FALSE
+#define WICED_APP_AUDIO_RC_TG_INCLUDED      TRUE
+#define WICED_APP_AUDIO_RC_CT_INCLUDED      FALSE
+#define WICED_APP_AUDIO_SINK_INCLUDED       TRUE
 
-/*
- * This utility counts the characteers in a string
- * Returns  number of characters ( excluding the terminating '0' )
- */
-int utl_strlen( char *p_str )
-{
-    register int  xx = 0;
+/* BLE Profiles/Applications */
+#define WICED_APP_ANCS_INCLUDED             FALSE
+#define WICED_APP_TEST_INCLUDED             FALSE
 
-    while ( *p_str++ != 0 )
-        xx++;
-
-    return ( xx );
-}
-
-/*
- * This utility function converts a UINT16 to a string.  The string is NULL-terminated.
- * Returns Length of string.
- */
-int util_itoa(int i, char *p_s)
-{
-    int         j, k;
-    char        *p = p_s;
-    int         fill = 0;
-
-    if (i == 0)
-    {
-        /* take care of zero case */
-        *p++ = '0';
-    }
-    else
-    {
-        for(j = 10000; j > 0; j /= 10)
-        {
-            k = i / j;
-            i %= j;
-            if (k > 0 || fill)
-            {
-              *p++ = k + '0';
-              fill = 1;
-            }
-        }
-    }
-    *p = 0;
-    return (int) (p - p_s);
-}
+#endif /* _WICED_APP_H_ */
